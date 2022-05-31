@@ -2,8 +2,6 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import GoogleAuth from "./Components/GoogleAuth";
 import AncesTree from "./Pages/AncesTree";
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
-
 function App() {
   const navigate = useNavigate();
   const handleLogin = async (res: any, err: any) => {
@@ -14,6 +12,7 @@ function App() {
       navigate('/ancestree', { replace: true });
     }
   }
+  const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   return (
     <div className="App">
@@ -33,7 +32,7 @@ function App() {
         <Route
           path="/login"
           element={
-            <GoogleAuth clientId={GOOGLE_CLIENT_ID} callback={handleLogin} skipLogin={!!localStorage.getItem('token')} />
+            <GoogleAuth clientId={GOOGLE_CLIENT_ID || ''} callback={handleLogin} skipLogin={!!localStorage.getItem('token')} />
           }
         />
         <Route
