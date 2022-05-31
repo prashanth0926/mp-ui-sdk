@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export default () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8080/api/',
+    baseURL: API_URL || 'http://localhost:8080/api/',
     timeout: 30000,
     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}
   });
