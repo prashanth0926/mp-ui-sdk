@@ -50,7 +50,7 @@ export default ({ user, callback }: any) => {
   
   return (
     <FormGroup style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Stack spacing={3}>
+      <Stack spacing={3} style={{ minWidth: '25em' }} >
         <Autocomplete
           freeSolo
           value={(usr || {})['name']}
