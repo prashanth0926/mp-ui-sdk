@@ -1,7 +1,11 @@
 import axios from "axios";
 
+declare const window: {
+  _env_: Record<string, string>,
+};
+
 export default () => {
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = window._env_.API_URL;
   const instance = axios.create({
     baseURL: API_URL || 'http://localhost:8080/api/',
     timeout: 30000,
