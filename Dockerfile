@@ -1,11 +1,10 @@
 # build environment
-FROM node:16.14.2-alpine as build
+FROM node:21-alpine as build
 WORKDIR /app
+USER node
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-lock.json ./
+COPY --chown=node:node . ./
 RUN npm ci --silent
-COPY . ./
 RUN npm run build
 
 # production environment

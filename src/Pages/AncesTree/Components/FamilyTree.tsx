@@ -1,4 +1,5 @@
-import { Button, Menu, MenuItem, Typography } from "@mui/material"
+import { Button, CircularProgress, Menu, MenuItem, Typography } from "@mui/material"
+import SyncIcon from '@mui/icons-material/Sync';
 import { useCallback, useEffect, useState } from "react";
 import { Tree, TreeNode } from 'react-organizational-chart'
 import useApiCall from '../../../Hooks/ApiCall';
@@ -29,6 +30,13 @@ const Kids = ({ kids, fetchChildren }: any) => {
     )
   })
 }
+const RefreshLoadingIcon = ({ isLoading }: { isLoading: boolean }) => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+      {isLoading && <CircularProgress />}
+    </div>
+  );
+};
 
 export default ({ familyname }: any) => {
   const [fam, setFamily]: any = useState({ children: [] });
@@ -67,10 +75,10 @@ export default ({ familyname }: any) => {
 
     updData(family, updatedData);
     setFamily(family);
-  }, [fam, setFamily])
-
-  useEffect(() => {
+  }, [fam, setFamily]);
+  const sync = useCallback(async () => {
     const setFamilyAsync = async () => {
+      setFamily({ children: [] });
       const { data } = await axiosInstance(`/people?familyname=${familyname}&familyHead=true`);
       setFamily({
         children: data,
@@ -79,16 +87,20 @@ export default ({ familyname }: any) => {
     if (familyname) {
       setFamilyAsync();
     }
-  }, [familyname])
+  }, [familyname]);
+
+  useEffect(() => {
+    sync();
+  }, [sync]);
 
   return (
     <div>
       {
-        <div>
-          <Tree label={<Typography variant="h6">{familyname}</Typography>}>
+        fam.children.length ? (<div>
+          <Tree label={<Typography variant="h6">{familyname} <SyncIcon onClick={sync} style={{ cursor: 'pointer' }} /></Typography>}>
             <Kids kids={fam.children} fetchChildren={fetchChildrenCall} />
           </Tree>
-        </div>
+        </div>) : <RefreshLoadingIcon isLoading={true} />
       }
     </div>
   )
