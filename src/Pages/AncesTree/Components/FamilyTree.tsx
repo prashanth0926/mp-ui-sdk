@@ -1,11 +1,10 @@
-import { Button, CircularProgress, Menu, MenuItem, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import SyncIcon from '@mui/icons-material/Sync';
 import { useCallback, useEffect, useState } from "react";
 import { Tree, TreeNode } from 'react-organizational-chart'
-import useApiCall from '../../../Hooks/ApiCall';
 import useAxiosInstance from '../axiosInstance';
-import AddPersonDrawer from "./AddPersonDrawer";
 import FamilyNode from "./FamilyNode";
+import RefreshLoadingIcon from "./RefreshLoadingIcon";
 
 const Kids = ({ kids, fetchChildren }: any) => {
 
@@ -30,13 +29,6 @@ const Kids = ({ kids, fetchChildren }: any) => {
     )
   })
 }
-const RefreshLoadingIcon = ({ isLoading }: { isLoading: boolean }) => {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      {isLoading && <CircularProgress />}
-    </div>
-  );
-};
 
 export default ({ familyname }: any) => {
   const [fam, setFamily]: any = useState({ children: [] });
@@ -54,7 +46,6 @@ export default ({ familyname }: any) => {
     setFamily({ children: [] });
 
     const updData = (fam: any, updatedData: any) => {
-      console.log('fff: ', fam);
       const d = (fam?.children || []).find((p: any) => p.id === updatedData.id);
 
       if (d) {

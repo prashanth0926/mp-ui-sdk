@@ -19,7 +19,6 @@ export default ({ user, callback }: any) => {
     }))
   };
   const handleSubmit = () => {
-    console.log('submit: ', usr);
     callback(usr);
   }
   const isSubmitDisabled = () => {
@@ -28,9 +27,7 @@ export default ({ user, callback }: any) => {
   }
 
   const handlePersonNameChange = (eve: any) => {
-    console.log('p name change: ', eve.target.innerText);
     const selUsr = usrs.find((u: any) => `${u.name} ${u.familyname}` === eve.target.innerText)
-    console.log('selUsr: ', selUsr);
     setUsr(selUsr);
   }
 
