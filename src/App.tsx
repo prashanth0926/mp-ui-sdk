@@ -9,8 +9,6 @@ declare const window: {
 function App() {
   const navigate = useNavigate();
   const handleLogin = async (res: any, err: any) => {
-    console.log('login callback res: ', res);
-    console.log('login callback err: ', err);
     if (res?.credential) {
       await localStorage.setItem('token', res.credential);
       navigate('/ancestree', { replace: true });
